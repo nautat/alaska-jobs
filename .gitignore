@@ -1,0 +1,16 @@
+# Python / tooling
+.venv/
+__pycache__/
+*.pyc
+.ruff_cache/
+
+# Cached downloads (re-fetch with: uv run python pipeline/build.py)
+data/raw/
+
+# Build output for static hosting (regenerate with pipeline/package_web.py)
+dist/
+.vercel/
+
+# OS / editor / local settings
+.DS_Store
+.claude/settings.local.json

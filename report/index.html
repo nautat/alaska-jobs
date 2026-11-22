@@ -1,0 +1,211 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How Alaska Makes a Living</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..100,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: one reading column (~66ch) with figures that widen to 72rem; a sticky
+   section rail; topo-survey type (condensed Archivo display, Plex for text/data). */
+:root {
+  --bg: #f3f5f4;            /* page plane: cool glacier grey */
+  --surface: #fcfcfb;       /* chart surface (validated palette surface) */
+  --ink: #101a1c;
+  --ink-2: #4b5457;
+  --muted: #838a8b;
+  --grid: #e1e3df;
+  --axis: #c3c6c1;
+  --rule: rgba(16,26,28,.10);
+  --accent: #1f6a8a;        /* page accent: deep glacier blue, links & highlights */
+  --accent-wash: rgba(31,106,138,.08);
+  --hl: #eb6834;            /* highlight for "Talkeetna" callouts (series orange) */
+  /* categorical slots (fixed order; validated reference palette) */
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
+  --s5:#e87ba4; --s6:#008300; --s7:#6250d6; --s8:#e34948;
+  /* sequential blue ramp */
+  --q100:#cde2fb; --q200:#9ec5f4; --q300:#6da7ec; --q400:#3987e5; --q500:#256abf; --q600:#184f95; --q700:#0d366b;
+  --mid:#f0efec;            /* diverging midpoint */
+  --f-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --f-text: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-data: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --step--1: .8125rem; --step-0: 1rem; --step-1: 1.1875rem; --step-2: 1.5rem; --step-3: 2.125rem; --step-4: clamp(2.5rem, 6vw, 4.25rem);
+  --col: 41rem; --wide: 72rem;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg:#0f1213; --surface:#1a1a19; --ink:#eef0ee; --ink-2:#c1c5c2; --muted:#8a908f; --grid:#2c2d2b; --axis:#3a3c39;
+  --rule: rgba(255,255,255,.10); --accent:#6cb4d6; --accent-wash: rgba(108,180,214,.10); --hl:#d95926;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#0ca30c; --s7:#9085e9; --s8:#e66767;
+  --q100:#184f95; --q200:#1c5cab; --q300:#256abf; --q400:#3987e5; --q500:#6da7ec; --q600:#9ec5f4; --q700:#cde2fb;
+  --mid:#383835; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg:#0f1213; --surface:#1a1a19; --ink:#eef0ee; --ink-2:#c1c5c2; --muted:#8a908f; --grid:#2c2d2b; --axis:#3a3c39;
+  --rule: rgba(255,255,255,.10); --accent:#6cb4d6; --accent-wash: rgba(108,180,214,.10); --hl:#d95926;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#0ca30c; --s7:#9085e9; --s8:#e66767;
+  --q100:#184f95; --q200:#1c5cab; --q300:#256abf; --q400:#3987e5; --q500:#6da7ec; --q600:#9ec5f4; --q700:#cde2fb;
+  --mid:#383835; color-scheme: dark; }
+
+body { background: var(--bg); color: var(--ink); font: 400 var(--step-0)/1.6 var(--f-text); -webkit-font-smoothing: antialiased; }
+body::before { content:""; position:fixed; inset:0 0 auto; height: env(safe-area-inset-top, 0px); z-index:10; background: var(--bg); }
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+.wrap { max-width: var(--wide); margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* hero */
+.hero { padding-block: 3.5rem 2rem; }
+.hero .eyebrow, .eyebrow { font: 500 var(--step--1)/1.3 var(--f-data); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.hero h1 { font: 800 var(--step-4)/0.98 var(--f-display); font-stretch: 72%; letter-spacing: -.01em; margin: .5rem 0 1rem; text-wrap: balance; max-width: 14ch; }
+.hero .dek { font-size: var(--step-1); color: var(--ink-2); max-width: var(--col); margin: 0; }
+.hero-grid { display: grid; gap: 2rem; grid-template-columns: minmax(0,1fr); align-items: end; }
+@media (min-width: 900px) { .hero-grid { grid-template-columns: minmax(0,1.05fr) minmax(0,1fr); } }
+
+/* section rail */
+.rail { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(6px); border-bottom: 1px solid var(--rule); }
+.rail nav { display: flex; gap: 1.25rem; overflow-x: auto; scrollbar-width: none; padding-block: .6rem; font: 500 var(--step--1)/1 var(--f-text); white-space: nowrap; }
+.rail a { color: var(--ink-2); text-decoration: none; padding-block: .25rem; border-bottom: 2px solid transparent; }
+.rail a:hover, .rail a.on { color: var(--ink); border-bottom-color: var(--accent); }
+
+/* sections */
+.sec { padding-block: 3.25rem 1rem; scroll-margin-top: 3rem; }
+.sec + .sec { border-top: 1px solid var(--rule); }
+.sec h2 { font: 750 var(--step-3)/1.08 var(--f-display); font-stretch: 78%; margin: .35rem 0 1rem; text-wrap: balance; max-width: 22ch; }
+.sec h3 { font: 650 var(--step-1)/1.25 var(--f-display); font-stretch: 85%; margin: 2.25rem 0 .5rem; }
+.prose { max-width: var(--col); }
+.prose p { margin: 0 0 1rem; }
+.prose strong { font-weight: 600; }
+.lede { font-size: var(--step-1); color: var(--ink-2); }
+.num { font-variant-numeric: tabular-nums; }
+.hl { color: inherit; background: linear-gradient(transparent 62%, color-mix(in srgb, var(--hl) 28%, transparent) 62%); }
+
+/* figures */
+.fig { background: var(--surface); border: 1px solid var(--rule); border-radius: 10px; padding: 1rem 1rem .75rem; margin: 1.5rem 0; min-width: 0; }
+.fig-head { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: flex-start; justify-content: space-between; }
+.fig-title { font: 600 var(--step-0)/1.3 var(--f-text); margin: 0; }
+.fig-sub { font-size: var(--step--1); color: var(--ink-2); margin: .15rem 0 0; }
+.fig-body { position: relative; margin-top: .75rem; min-width: 0; }
+.fig-body svg { display: block; overflow: visible; }
+.fig-note { font-size: .75rem; color: var(--muted); margin: .6rem 0 0; }
+.fig-grid { display: grid; gap: 0 1.25rem; grid-template-columns: minmax(0,1fr); }
+@media (min-width: 880px) { .fig-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } .fig-grid.three { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+.fig-grid > .fig { margin-block: .75rem; }
+
+/* svg text */
+svg text { fill: var(--ink-2); font: 400 11px/1 var(--f-text); }
+svg .tick text, svg .axis-label { fill: var(--muted); font: 400 10.5px/1 var(--f-data); font-variant-numeric: tabular-nums; }
+svg .tick line, svg .grid line { stroke: var(--grid); }
+svg .domain { stroke: var(--axis); }
+svg .lbl-strong { fill: var(--ink); font-weight: 600; }
+svg .lbl-val { fill: var(--ink); font: 500 10.5px/1 var(--f-data); font-variant-numeric: tabular-nums; }
+
+/* controls */
+.controls { display: flex; flex-wrap: wrap; gap: .5rem .75rem; align-items: center; }
+.controls label { font-size: var(--step--1); color: var(--ink-2); }
+select, .seg button { font: 500 var(--step--1)/1.2 var(--f-text); color: var(--ink); background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: .4rem .6rem; }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 7px; padding: 2px; background: var(--bg); gap: 2px; flex-wrap: wrap; }
+.seg button { border: 0; background: transparent; color: var(--ink-2); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 0 0 1px var(--rule); }
+
+/* legend */
+.legend { display: flex; flex-wrap: wrap; gap: .35rem 1rem; font-size: .78rem; color: var(--ink-2); margin-top: .5rem; }
+.legend span { display: inline-flex; align-items: center; gap: .4rem; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; }
+.legend i.line { height: 2px; width: 14px; border-radius: 1px; }
+.legend i.dot { border-radius: 50%; }
+.ramp { display: flex; align-items: center; gap: .5rem; font: 400 .72rem/1 var(--f-data); color: var(--muted); margin-top: .5rem; }
+.ramp .bar { height: 8px; width: 160px; border-radius: 4px; }
+
+/* stat tiles */
+.tiles { display: grid; gap: 1px; grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr)); background: var(--rule); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
+.tile { background: var(--surface); padding: .9rem 1rem; display: flex; flex-direction: column; gap: .2rem; }
+.tile .k { font-size: var(--step--1); color: var(--ink-2); }
+.tile .v { font: 700 1.75rem/1.1 var(--f-display); font-stretch: 85%; }
+.tile .d { font-size: .75rem; color: var(--muted); }
+
+/* table view */
+details.tableview { margin-top: .5rem; font-size: var(--step--1); }
+details.tableview summary { cursor: pointer; color: var(--ink-2); width: fit-content; }
+details.tableview .tv { overflow-x: auto; max-height: 22rem; margin-top: .5rem; }
+details.tableview table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+details.tableview th, details.tableview td { text-align: right; padding: .3rem .6rem; border-bottom: 1px solid var(--grid); white-space: nowrap; }
+details.tableview th:first-child, details.tableview td:first-child { text-align: left; }
+details.tableview th { font-weight: 600; color: var(--ink); position: sticky; top: 0; background: var(--surface); }
+
+/* tooltip */
+.tip { position: fixed; z-index: 50; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--rule); border-radius: 8px; box-shadow: 0 6px 24px rgba(0,0,0,.14); padding: .5rem .65rem; font-size: .8rem; line-height: 1.35; max-width: 17rem; }
+.tip b { font-weight: 600; }
+.tip .tk { color: var(--ink-2); }
+.tip .row { display: flex; justify-content: space-between; gap: 1rem; font-variant-numeric: tabular-nums; }
+.tip i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: .35rem; }
+
+/* callout & footer */
+.callout { border-left: 3px solid var(--hl); padding: .25rem 0 .25rem 1rem; margin: 1.5rem 0; max-width: var(--col); color: var(--ink-2); }
+.sources { font-size: var(--step--1); color: var(--ink-2); max-width: var(--col); }
+.sources li { margin-bottom: .45rem; }
+footer { padding-block: 2rem 3rem; color: var(--muted); font-size: .78rem; }
+.loading { color: var(--muted); font-size: var(--step--1); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<header class="wrap hero">
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow">Alaska · jobs, income &amp; the seasons · data through 2025</div>
+      <h1>How Alaska Makes a Living</h1>
+      <p class="dek">Oil money, salmon, tourists, soldiers, and a yearly check from the Permanent Fund. A tour of who works where in the 49th state, what it pays, how the seasons move it, and how people make it work up the Parks Highway around Talkeetna.</p>
+    </div>
+    <div id="hero-figure" aria-label="Map of Alaska" style="min-width:0"></div>
+  </div>
+</header>
+
+<div class="rail">
+  <div class="wrap"><nav aria-label="Sections">
+    <a href="#overview">The big picture</a>
+    <a href="#map">Map explorer</a>
+    <a href="#seasons">Seasons</a>
+    <a href="#income">Beyond wages</a>
+    <a href="#trends">Twenty years</a>
+    <a href="#talkeetna">Talkeetna &amp; the Upper Su</a>
+    <a href="#sources">Sources</a>
+  </nav></div>
+</div>
+
+<main>
+  <section class="sec" id="overview"><div class="wrap" data-section="overview"><p class="loading">Loading…</p></div></section>
+  <section class="sec" id="map"><div class="wrap" data-section="map"><p class="loading">Loading…</p></div></section>
+  <section class="sec" id="seasons"><div class="wrap" data-section="seasons"><p class="loading">Loading…</p></div></section>
+  <section class="sec" id="income"><div class="wrap" data-section="income"><p class="loading">Loading…</p></div></section>
+  <section class="sec" id="trends"><div class="wrap" data-section="trends"><p class="loading">Loading…</p></div></section>
+  <section class="sec" id="talkeetna"><div class="wrap" data-section="talkeetna"><p class="loading">Loading…</p></div></section>
+
+  <section class="sec" id="sources"><div class="wrap">
+    <div class="eyebrow">Methods</div>
+    <h2>Where the numbers come from</h2>
+    <div class="prose">
+      <p>Each figure is built from public data by a small Python pipeline. Different sources count different things, so they don't always agree. Here is what each one sees and misses.</p>
+    </div>
+    <ul class="sources">
+      <li><strong>Wage-and-salary jobs (BLS QCEW, 2014–2025).</strong> Jobs covered by unemployment insurance, counted where the job is. It leaves out the self-employed, most commercial fishermen, and active-duty military. Small industries in small boroughs are suppressed for confidentiality and shown as gaps, never as zero. 2025 has unusually heavy suppression, so 2024 is the snapshot year.</li>
+      <li><strong>All jobs, including self-employed and military (BEA CAEMP25N, 2001–2022).</strong> Full- and part-time jobs by place of work, including proprietors.</li>
+      <li><strong>Personal income (BEA CAINC4, CAINC35, through 2024 / 2022).</strong> Wages, business income, investment income, and government transfers by borough. The Permanent Fund Dividend sits in "other transfers from government."</li>
+      <li><strong>What residents do (Census ACS 5-year, 2020–2024).</strong> A survey of where people live, not where they work. It includes the self-employed. Small places have wide margins of error, shown as ± values at 90% confidence.</li>
+      <li><strong>Businesses by ZIP code (Census ZIP Business Patterns, 2023).</strong> Establishments with paid employees, counted in March.</li>
+      <li><strong>Commercial fishing (Alaska CFEC, 2023).</strong> Permit holders and estimated gross earnings by where the fisherman lives.</li>
+      <li><strong>Permanent Fund Dividend (Alaska Dept. of Revenue).</strong> Amount paid per person, 1982–2025.</li>
+      <li><strong>Boundaries (Census cartographic files, 2023).</strong> The 30 boroughs and census areas, plus CDPs, roads, rail, and rivers for the Upper Susitna map.</li>
+    </ul>
+  </div></section>
+</main>
+<footer class="wrap">Built November 2026 from public U.S. and State of Alaska data.</footer>
+
+<div class="tip" id="tip" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script src="js/core.js"></script>
+<script src="js/sec_overview.js"></script>
+<script src="js/sec_map.js"></script>
+<script src="js/sec_seasons.js"></script>
+<script src="js/sec_income.js"></script>
+<script src="js/sec_trends.js"></script>
+<script src="js/sec_talkeetna.js"></script>
+<script>AK.start();</script>
